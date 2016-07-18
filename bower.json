@@ -1,0 +1,22 @@
+{
+  "name": "fitbit-graph",
+  "description": "View Fitbit exports as graphs",
+  "main": "",
+  "authors": [
+    "Craig Palermo <craig.palermo@opmbx.org>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "angular-upload": "^1.0.12",
+    "angular-chart.js": "^0.10.2"
+  }
+}

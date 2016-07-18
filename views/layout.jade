@@ -1,0 +1,23 @@
+doctype html
+html(ng-app='fitbit-app')
+  head
+    title= title
+
+    // Styles
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/javascripts/vendor/bootstrap/css/bootstrap.css')
+
+    // Scripts
+    script(src='/javascripts/vendor/jquery/jquery.js')
+    script(src='/javascripts/vendor/bootstrap/js/bootstrap.js')
+    script(src='/javascripts/vendor/angularjs/angular.js')
+    script(src='/javascripts/vendor/angular-upload/angular-upload.js')
+    script(src='/javascripts/vendor/Chart.js/Chart.js')
+    script(src='/javascripts/vendor/angular-chart.js/angular-chart.js')
+
+    // Angular app
+    script(src='/javascripts/app.js')
+    script(src='/javascripts/components/index/indexCtrl.js')
+  body
+    div.container
+      block content
