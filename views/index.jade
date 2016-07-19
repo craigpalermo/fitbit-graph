@@ -2,12 +2,15 @@ extends layout
 
 block content
   h1= title
+
   div.row(ng-controller='indexCtrl as ctrl')
+    // File upload form
     div.col-xs-12(ng-hide='ctrl.chartData')
       form
         p Upload your Fitbit "Activities" export:
         div.btn.btn-primary(upload-button, url='/upload/activities', param='file', on-upload='ctrl.onUpload(files)', on-success='ctrl.onSuccess(response)')
 
+    // Graph
     div.col-xs-12(ng-show='ctrl.chartData')
       canvas.chart.chart-bar(chart-data='ctrl.chartData', chart-labels='ctrl.chartLabels')
 

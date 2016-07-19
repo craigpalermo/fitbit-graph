@@ -6,6 +6,10 @@ angular.module('fitbit-app').controller('indexCtrl', [
       // TODO progress spinner or something
     };
 
+    /**
+     * Upon successful file upload, extract chart labels and data from response
+     * @param res
+     */
     self.onSuccess = function onSuccess (res) {
       if (res.status === 200) {
         // Extract dates to use as labels
@@ -16,6 +20,9 @@ angular.module('fitbit-app').controller('indexCtrl', [
       }
     };
 
+    /**
+     * Null out chartData to allow user to upload a new file
+     */
     self.reset = function reset () {
       self.chartData = null;
     };

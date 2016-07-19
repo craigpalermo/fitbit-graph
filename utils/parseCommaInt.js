@@ -1,7 +1,7 @@
-module.exports = (string) => {
-  if (!!string) {
-    return parseInt(string.replace(/,/, ''));
-  }
-
-  return null;
-};
+/**
+ * If string is given, try to remove commas and parse as integer. Otherwise,
+ * return null.
+ * @param string
+ * @returns {*}
+ */
+module.exports = (string) => !!string ? parseInt(string.replace(/,/, '')) : null;
