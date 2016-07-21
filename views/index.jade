@@ -7,22 +7,20 @@ block content
 
   div.row(ng-controller='indexCtrl as ctrl')
     // File upload form
-    div.col-xs-12(ng-hide='ctrl.chartData')
+    div.col-xs-12(ng-hide='ctrl.resData')
       form
         p Upload your Fitbit "Activities" export:
         div.btn.btn-primary(upload-button, url='/upload/activities', param='file', on-upload='ctrl.onUpload(files)', on-success='ctrl.onSuccess(response)')
 
-    // Graph
-    div.col-xs-12(ng-show='ctrl.chartData')
+    // After successful upload
+    div.col-xs-12(ng-if='ctrl.resData')
+      // Graphs
       div.row
-        // Select field to display
-        div.col-xs-12.col-sm-3
-          div.form-group
-            select.form-control(ng-options='label.field as label.displayName for label in ctrl.chartFields', ng-model='ctrl.selectedField', ng-change='ctrl.chartDataForField(ctrl.responseData, ctrl.selectedField)')
+        div.col-xs-12.col-sm-6(ng-repeat='item in ctrl.chartFields', ng-if='ctrl.chartData[item.field]')
+          h2 {{ item.displayName }}
+          canvas.chart.chart-bar(chart-data='ctrl.chartData[item.field]', chart-labels='ctrl.chartLabels')
 
-        // Reset button
-        div.col-xs-12.col-sm-3
-          button.btn.btn-default(ng-click='ctrl.reset()') Reset
+      // Reset button
       div.row
-        div.col-xs-12
-          canvas.chart.chart-bar(chart-data='ctrl.chartData', chart-labels='ctrl.chartLabels')
+        div.col-xs-12.col-sm-3
+          button.btn.btn-danger(ng-click='ctrl.reset()') Reset
