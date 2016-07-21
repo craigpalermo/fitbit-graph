@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  h1= title
+  div.row
+    div.col-xs-12
+      h1= title
 
   div.row(ng-controller='indexCtrl as ctrl')
     // File upload form
@@ -12,6 +14,15 @@ block content
 
     // Graph
     div.col-xs-12(ng-show='ctrl.chartData')
-      canvas.chart.chart-bar(chart-data='ctrl.chartData', chart-labels='ctrl.chartLabels')
+      div.row
+        // Select field to display
+        div.col-xs-12.col-sm-3
+          div.form-group
+            select.form-control(ng-options='label.field as label.displayName for label in ctrl.chartFields', ng-model='ctrl.selectedField', ng-change='ctrl.chartDataForField(ctrl.responseData, ctrl.selectedField)')
 
-      button.btn.btn-default(ng-click='ctrl.reset()') Reset
+        // Reset button
+        div.col-xs-12.col-sm-3
+          button.btn.btn-default(ng-click='ctrl.reset()') Reset
+      div.row
+        div.col-xs-12
+          canvas.chart.chart-bar(chart-data='ctrl.chartData', chart-labels='ctrl.chartLabels')
