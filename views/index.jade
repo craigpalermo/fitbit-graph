@@ -6,21 +6,33 @@ block content
       h1= title
 
   div.row(ng-controller='indexCtrl as ctrl')
-    // File upload form
-    div.col-xs-12(ng-hide='ctrl.resData')
-      form
-        p Upload your Fitbit "Activities" export:
-        div.btn.btn-primary(upload-button, url='/upload/activities', param='file', on-upload='ctrl.onUpload(files)', on-success='ctrl.onSuccess(response)')
-
-    // After successful upload
-    div.col-xs-12(ng-if='ctrl.resData')
-      // Graphs
+    div.col-xs-12
+      // Instructions
       div.row
-        div.col-xs-12.col-sm-6(ng-repeat='item in ctrl.chartFields', ng-if='ctrl.chartData[item.field]')
-          h2 {{ item.displayName }}
-          canvas.chart.chart-bar(chart-data='ctrl.chartData[item.field]', chart-labels='ctrl.chartLabels')
+        div.col-xs-12
+          p Upload your Fitbit "Activities" export:
 
-      // Reset button
+      // Error
       div.row
-        div.col-xs-12.col-sm-3
-          button.btn.btn-danger(ng-click='ctrl.reset()') Reset
+        div.col-xs-12(ng-if='ctrl.error')
+          div.alert.alert-danger
+            p There was a problem uploading that file. Is it a valid Fitbit export?
+
+      div.row
+        // Upload button
+        div.col-xs-12(ng-hide='ctrl.resData')
+          form
+            div.btn.btn-primary(upload-button, url='/upload/activities', param='file', on-upload='ctrl.onUpload(files)', on-success='ctrl.onSuccess(response)', on-error='ctrl.onError()')
+
+        // After successful upload
+        div.col-xs-12(ng-if='ctrl.resData')
+          // Graphs
+          div.row
+            div.col-xs-12.col-sm-6(ng-repeat='item in ctrl.chartFields', ng-if='ctrl.chartData[item.field]')
+              h2 {{ item.displayName }}
+              canvas.chart.chart-bar(chart-data='ctrl.chartData[item.field]', chart-labels='ctrl.chartLabels')
+
+          // Reset button
+          div.row
+            div.col-xs-12.col-sm-3
+              button.btn.btn-danger(ng-click='ctrl.reset()') Reset

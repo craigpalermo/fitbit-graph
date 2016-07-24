@@ -2,13 +2,6 @@ angular.module('fitbit-app').controller('indexCtrl', [
   function () {
     const self = this;
 
-    self.chartFields = [
-      { field: 'caloriesBurned', displayName: 'Calories Burned' },
-      { field: 'steps', displayName: 'Steps' },
-      { field: 'distance', displayName: 'Distance' },
-      { field: 'floors', displayName: 'Floors' },
-    ];
-
     self.chartData = {};
 
     /**
@@ -20,8 +13,9 @@ angular.module('fitbit-app').controller('indexCtrl', [
       self.chartData[fieldName] = [data.map(x => x[fieldName])];
     }
 
-    self.onUpload = function onUpload (files) {
-      // TODO progress spinner or something
+    self.onUpload = function onUpload () {
+      self.resData = false;
+      self.error = false;
     };
 
     /**
@@ -29,15 +23,23 @@ angular.module('fitbit-app').controller('indexCtrl', [
      * @param res
      */
     self.onSuccess = function onSuccess (res) {
-      if (res.status === 200) {
-        // Extract dates to use as labels
-        self.chartLabels = res.data.map(x => x.date);
+      // Extract dates to use as labels
+      self.chartLabels = res.data.lines.map(x => x.date);
 
-        // Extract data for each field
-        self.resData = true;
-        self.chartFields.map(x => chartDataForField(res.data, x.field));
-        console.log(self.chartData);
-      }
+      // Extract data for each field
+      self.resData = true;
+      self.error = false;
+      self.chartFields = res.data.chartConfig;
+
+      self.chartFields.map(x => chartDataForField(res.data.lines, x.field));
+    };
+
+    /**
+     * Set error flag upon failed upload
+     * @param res
+     */
+    self.onError = function onError (res) {
+      self.error = true;
     };
 
     /**
@@ -45,6 +47,7 @@ angular.module('fitbit-app').controller('indexCtrl', [
      */
     self.reset = function reset () {
       self.resData = false;
+      self.error = false;
     };
   },
 ]);
